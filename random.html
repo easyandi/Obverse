@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obverse — Random</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background: #fff;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Main image */
+    #seq-img {
+      max-width: min(80vw, 1080px);
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      user-select: none;
+    }
+
+    /* Title — top left, always visible, links home */
+    #home-link {
+      position: fixed;
+      top: 18px;
+      left: 24px;
+      z-index: 200;
+      display: block;
+      text-decoration: none;
+    }
+
+    #home-link img {
+      height: 22px;
+      width: auto;
+      opacity: 0.35;
+      transition: opacity 0.2s;
+    }
+
+    #home-link:hover img { opacity: 0.8; }
+
+    /* Close × — top right, links home */
+    #close-link {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      z-index: 200;
+      display: block;
+      text-decoration: none;
+      color: #bbb;
+      font-size: 24px;
+      font-weight: 300;
+      line-height: 1;
+      padding: 8px;
+      transition: color 0.2s;
+      font-family: sans-serif;
+    }
+
+    #close-link:hover { color: #333; }
+
+    /* Prev / next arrows */
+    .seq-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 52px;
+      cursor: pointer;
+      padding: 16px 20px;
+      line-height: 1;
+      transition: color 0.2s;
+      user-select: none;
+      font-weight: 200;
+      z-index: 200;
+    }
+
+    .seq-arrow:hover { color: #666; }
+    #seq-prev { left: 8px; }
+    #seq-next { right: 8px; }
+    .seq-arrow.hidden { visibility: hidden; }
+
+    /* Image counter — bottom centre */
+    #seq-counter {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #bbb;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      font-family: sans-serif;
+    }
+
+    /* "Next →" button — same position as right arrow, replaces it at end of sequence */
+    #next-random {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 8px;
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 52px;
+      cursor: pointer;
+      padding: 16px 20px;
+      line-height: 1;
+      font-weight: 200;
+      font-family: sans-serif;
+      transition: color 0.2s;
+      z-index: 200;
+    }
+
+    #next-random:hover { color: #666; }
+    #next-random.hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Title: top left, exits to home -->
+  <a id="home-link" href="index.html">
+    <img
+      src="images/home/title_1440.webp"
+      srcset="images/home/title_720.webp 720w, images/home/title_1440.webp 1440w"
+      sizes="120px"
+      alt="Obverse — home">
+  </a>
+
+  <!-- Close ×: top right, exits to home -->
+  <a id="close-link" href="index.html" aria-label="Close — return home">&#x2715;</a>
+
+  <!-- Prev / next arrows -->
+  <button class="seq-arrow" id="seq-prev" aria-label="Previous">&#8249;</button>
+  <button class="seq-arrow" id="seq-next" aria-label="Next">&#8250;</button>
+
+  <!-- Current image -->
+  <img id="seq-img" src="" alt="">
+
+  <!-- Counter -->
+  <div id="seq-counter"></div>
+
+  <!-- Next random sequence button (end of sequence only) -->
+  <button id="next-random" class="hidden">→</button>
+
+  <script>
+    // ── All sequences ──
+
+    const boxSeqs = [
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_01.1.jpg','bx_seq_01.2.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_02.1.jpg','bx_seq_02.2.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_03.1.jpg','bx_seq_03.2.jpg','bx_seq_03.3.jpg','bx_seq_03.4.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_04.1.jpg','bx_seq_04.2.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_05.1.jpg','bx_seq_05.2.jpg','bx_seq_05.3.jpg','bx_seq_05.4.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_06.1.jpg','bx_seq_06.2.jpg','bx_seq_06.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_07.1.jpg','bx_seq_07.2.jpg','bx_seq_07.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_08.1.jpg','bx_seq_08.2.jpg','bx_seq_08.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_09.1.jpg','bx_seq_09.2.jpg','bx_seq_09.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_10.1.jpg','bx_seq_10.2.jpg','bx_seq_10.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_11.1.jpg','bx_seq_11.2.jpg','bx_seq_11.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_12.1.jpg','bx_seq_12.2.jpg','bx_seq_12.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_13.1.jpg','bx_seq_13.2.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_14.1.jpg','bx_seq_14.2.jpg','bx_seq_14.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_15.1.jpg','bx_seq_15.2.jpg','bx_seq_15.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_16.1.jpg','bx_seq_16.2.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_17.1.jpg','bx_seq_17.2.jpg','bx_seq_17.3.jpg'] },
+      { cat: 'box', path: 'images/bx_seq/', files: ['bx_seq_18.1.jpg'] },
+    ];
+
+    const acrylSeqs = [
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['1.1.1.jpg','1.1.2.jpg','1.1.3.jpg','1.1.4.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['1.2.1.jpg','1.2.2.jpg','1.2.3.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['2.1.1.jpg','2.1.2.jpg','2.1.3.jpg','2.1.4.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['2.3.1.jpg','2.3.2.jpg','2.3.3.jpg','2.3.4.jpg','2.3.5.jpg','2.3.6.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['2.4.1.jpg','2.4.2.jpg','2.4.3.jpg','2.4.4.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['2.5.1.jpg','2.5.2.jpg','2.5.3.jpg','2.5.4.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['2.7.1.jpg','2.7.2.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['3.1.1.jpg','3.1.2.jpg','3.1.3.jpg','3.1.4.jpg','3.1.5.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['3.2.1.jpg','3.2.2.jpg','3.2.3.jpg','3.2.4.jpg','3.2.5.jpg','3.2.6.jpg','3.2.7.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['3.3.1.jpg','3.3.2.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['3.4.1.jpg','3.4.2.jpg','3.4.3.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['3.5.1.jpg','3.5.2.jpg','3.5.3.jpg','3.5.4.jpg','3.5.5.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['4.1.1.jpg','4.1.2.jpg','4.1.3.jpg','4.1.4.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['4.2.1.jpg','4.2.2.jpg','4.2.3.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['4.3.1.jpg','4.3.2.jpg','4.3.3.jpg','4.3.4.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['5.1.1.jpg','5.1.2.jpg','5.1.3.jpg','5.1.4.jpg','5.1.5.jpg','5.1.6.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['5.2.1.jpg','5.2.2.jpg','5.2.3.jpg','5.2.4.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['5.3.1.jpg','5.3.2.jpg','5.3.3.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['5.4.1.jpg','5.4.2.jpg','5.4.3.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['6.1.jpg','6.2.jpg','6.3.jpg','6.4.jpg','6.5.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['7.1.1.jpg','7.1.2.jpg','7.1.3.jpg','7.1.4.jpg','7.1.5.jpg','7.1.6.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['7.2.1.jpg','7.2.2.jpg','7.2.3.jpg','7.2.4.jpg','7.2.5.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['8.1.jpg','8.2.jpg','8.3.jpg','8.4.jpg','8.5.jpg','8.6.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['9.1.1.jpg','9.1.2.jpg','9.1.3.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['9.2.1.jpg','9.2.2.jpg','9.2.3.jpg','9.2.4.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['10.1.jpg','10.2.jpg','10.3.jpg','10.4.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['11.1.jpg','11.2.jpg','11.3.jpg','11.4.jpg','11.5.jpg','11.6.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['12.1.jpg','12.2.jpg','12.3.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['13.1.1.jpg'] },
+      { cat: 'acrylic', path: 'images/acryl_seq/', files: ['14.1.1.jpg','14.1.2.jpg'] },
+    ];
+
+    // ── Randomiser settings (edit these to adjust behaviour) ──
+    const settings = {
+      alternate:      true,   // true = strict box/acrylic alternation; false = pure random
+      avoidRepeat:    true,   // true = exhaust pool before repeating
+      excludeBox:     [],     // indices to permanently exclude from box sequences
+      excludeAcrylic: [],     // indices to permanently exclude from acrylic sequences
+      onlyBox:        [],     // if non-empty, restrict to only these box indices
+      onlyAcrylic:    [],     // if non-empty, restrict to only these acrylic indices
+    };
+
+    // ── State ──
+    let lastCat   = null;
+    let boxPool   = [];
+    let acrylPool = [];
+    let curSeq    = null;
+    let curImg    = 0;
+
+    function eligibleIndices(seqs, exclude, only) {
+      const all = seqs.map((_, i) => i);
+      if (only.length > 0) return only.filter(i => i < seqs.length);
+      return all.filter(i => !exclude.includes(i));
+    }
+
+    function refillPool(cat) {
+      if (cat === 'box')     boxPool   = eligibleIndices(boxSeqs,   settings.excludeBox,     settings.onlyBox).slice();
+      else                   acrylPool = eligibleIndices(acrylSeqs, settings.excludeAcrylic, settings.onlyAcrylic).slice();
+    }
+
+    function pickNextCat() {
+      if (!settings.alternate) return Math.random() < 0.5 ? 'box' : 'acrylic';
+      return (lastCat === 'box') ? 'acrylic' : 'box';
+    }
+
+    function nextSequence() {
+      const cat  = pickNextCat();
+      lastCat    = cat;
+      let pool   = cat === 'box' ? boxPool : acrylPool;
+      if (settings.avoidRepeat && pool.length === 0) { refillPool(cat); pool = cat === 'box' ? boxPool : acrylPool; }
+      if (pool.length === 0) { refillPool(cat); pool = cat === 'box' ? boxPool : acrylPool; }
+      const idx  = settings.avoidRepeat
+        ? pool.splice(Math.floor(Math.random() * pool.length), 1)[0]
+        : pool[Math.floor(Math.random() * pool.length)];
+      return cat === 'box' ? boxSeqs[idx] : acrylSeqs[idx];
+    }
+
+    // ── UI elements ──
+    const seqImg     = document.getElementById('seq-img');
+    const seqPrev    = document.getElementById('seq-prev');
+    const seqNext    = document.getElementById('seq-next');
+    const seqCounter = document.getElementById('seq-counter');
+    const nextRandom = document.getElementById('next-random');
+
+    function loadSequence(seq) {
+      curSeq = seq;
+      curImg = 0;
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      const seq = curSeq.files;
+      seqImg.src = curSeq.path + seq[curImg];
+      seqImg.alt = 'Image ' + (curImg + 1);
+      seqCounter.textContent = seq.length > 1 ? (curImg + 1) + ' / ' + seq.length : '';
+      seqPrev.classList.toggle('hidden', curImg === 0);
+      // Next arrow: shown while not at last image; Next→ button shown at last image
+      const atEnd = curImg === seq.length - 1;
+      seqNext.classList.toggle('hidden', atEnd);
+      nextRandom.classList.toggle('hidden', !atEnd);
+    }
+
+    seqPrev.addEventListener('click', () => {
+      if (curImg > 0) { curImg--; updateDisplay(); }
+    });
+
+    seqNext.addEventListener('click', () => {
+      if (curImg < curSeq.files.length - 1) { curImg++; updateDisplay(); }
+    });
+
+    nextRandom.addEventListener('click', () => loadSequence(nextSequence()));
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft' && curImg > 0) { curImg--; updateDisplay(); }
+      if (e.key === 'ArrowRight') {
+        if (curImg < curSeq.files.length - 1) { curImg++; updateDisplay(); }
+        else loadSequence(nextSequence());
+      }
+    });
+
+    // ── Start immediately on page load ──
+    refillPool('box');
+    refillPool('acrylic');
+    loadSequence(nextSequence());
+  </script>
+
+</body>
+</html>

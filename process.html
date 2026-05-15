@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Obverse — Process</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 48px 0 96px;
+      }
+
+      /* ── Page column ── */
+      .col {
+        width: 62%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      /* ── Title: left-aligned on desktop ── */
+      .title {
+        width: 50%;
+      }
+      .title a {
+        display: block;
+      }
+      .title img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .rule {
+        width: 100%;
+        height: 1px;
+        background: #ccc;
+        align-self: stretch;
+        margin-bottom: 40px;
+      }
+      .section-rule {
+        grid-column: span 3;
+        height: 1px;
+        background: #ccc;
+        margin: 8px 0; /* adjust top/bottom spacing around the rule */
+      }
+      /*
+    ════════════════════════════════════════════════════════
+      THREE-COLUMN GRID
+      ─ Add content by placing cells inside .content-grid
+      ─ Use span classes to control how many columns a cell occupies
+      ─ Empty <div class="span-N"></div> creates invisible white space
+    ════════════════════════════════════════════════════════
+    */
+      .content-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px 32px;
+      }
+
+      .span-1 {
+        grid-column: span 1;
+      }
+      .span-2 {
+        grid-column: span 2;
+      }
+      .span-3 {
+        grid-column: span 3;
+      }
+
+      /* ── Text blocks ── */
+      .text-block {
+        font-family: Georgia, serif;
+        font-size: 14px;
+        line-height: 1.75;
+        color: #333;
+      }
+
+      .text-block p + p {
+        margin-top: 1em;
+      }
+
+      /* ── Image blocks ── */
+      .img-block {
+        display: block;
+      }
+      .img-block img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .img-block figcaption {
+        font-family: sans-serif;
+        font-size: 11px;
+        color: #aaa;
+        margin-top: 6px;
+        line-height: 1.5;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 900px) {
+        body {
+          padding: 32px 0 72px;
+        }
+        .col {
+          width: 82%;
+          align-items: center;
+        }
+        .title {
+          width: 100%;
+        }
+        .content-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .span-3 {
+          grid-column: span 2;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 20px 0 48px;
+        }
+        .col {
+          width: 92%;
+        }
+        .content-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .span-1,
+        .span-2,
+        .span-3 {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="col">
+      <div class="title">
+        <a href="index.html">
+          <img
+            src="images/home/title_1440.webp"
+            srcset="images/home/title_720.webp 720w, images/home/title_1440.webp 1440w"
+            sizes="(max-width: 480px) 92vw, (max-width: 900px) 82vw, 31vw"
+            alt="Obverse — home" />
+        </a>
+      </div>
+
+      <div class="rule"></div>
+
+      <!--
+    ════════════════════════════════════════════════════════
+      HOW TO ADD CONTENT
+      Place cells directly inside .content-grid below.
+      Each cell needs: one span class + one content class.
+
+      PATTERNS (copy and edit):
+
+      Image spanning 2 cols + text in 1 col:
+        <figure class="img-block span-2">
+          <img src="images/..." alt="">
+          <figcaption>Optional caption.</figcaption>
+        </figure>
+        <div class="text-block span-1"><p>Text here.</p></div>
+
+      Image in 1 col + text spanning 2 cols:
+        <figure class="img-block span-1">
+          <img src="images/..." alt="">
+        </figure>
+        <div class="text-block span-2"><p>Text here.</p></div>
+
+
+      Text in 1 col + image in 1 col + image in 1 col:
+        <div class="text-block span-1"><p>Text here.</p></div>
+        <figure class="img-block span-1"><img src="images/..." alt=""></figure>
+        <figure class="img-block span-1"><img src="images/..." alt=""></figure>
+
+      Empty space (1 col) + image spanning 2 cols:
+        <div class="span-1"></div>
+        <figure class="img-block span-2"><img src="images/..." alt=""></figure>
+
+      Full-width image across all 3 cols:
+        <figure class="img-block span-3">
+          <img src="images/..." alt="">
+          <figcaption>Optional caption.</figcaption>
+        </figure>
+
+      Full-width text block:
+        <div class="text-block span-3"><p>Text here.</p></div>
+    ════════════════════════════════════════════════════════
+    -->
+
+      <div class="content-grid">
+        <!-- Add your content here -->
+        <div class="text-block span-3">
+          <p>
+            Each piece begins as an original design created on my computer using vector and photographic software. Some
+            designs are derived from historical engravings, others are geometric forms invented from scratch. The
+            artwork is engraved into a small piece of clear acrylic between 4 and 6mm thick. These pieces are
+            back-painted in various colour combinations with up to 5 coats of acrylic and/or enamel paints, often being
+            sanded between each coat. After the final coat, the edges are smoothed and cleaned or painted and the
+            surfaces polished to a high gloss finish. Each piece has optical qualities characteristic of being engraved
+            deeply into the material, rather than simply marked on the surface.
+          </p>
+        </div>
+
+        <div class="section-rule"></div>
+
+        <figure class="img-block span-1"><img src="images/xtra/engr_1_500.jpg" alt="" /></figure>
+        <figure class="img-block span-1"><img src="images/xtra/stud_2_500.jpg" alt="" /></figure>
+        <figure class="img-block span-1"><img src="images/xtra/paint_2_500.jpg" alt="" /></figure>
+
+        <div class="section-rule"></div>
+
+        <div class="text-block span-3">
+          <p>
+            I began by promoting these pieces as “wearable artworks”, although it always seemed an arbitrary
+            classification. The present method of presentation is to inlay the acrylic pieces into lids that fit wooden
+            boxes I make. The lids are designed in such a way that they can easily be hung on a wall to make a small,
+            framed artwork. I can still attach brooch pins to the smaller pieces so they can be worn on clothing, while
+            others use neodymium magnets (very strong, small and decades-durable) to stick to a backing board of any
+            size or material.
+            It is also possible to turn them into accessories such as keyrings, earrings etc. but this would be a
+            special assignment.</p>
+          <p>
+            I have avoided putting prices on any of the works shown here as the site is meant to show work, rather than sell it. However if you are interested in anything you see, or in knowing more about the process then please feel free to write: obversedesigns@gmail.com
+          </p>
+        </div>
+        <div class="section-rule"></div>
+
+        <figure class="img-block span-1"><img src="images/xtra/des_1.jpg" alt="" /></figure>
+        <figure class="img-block span-1"><img src="images/xtra/des_2.jpg" alt="" /></figure>
+        <figure class="img-block span-1"><img src="images/xtra/des_3.jpg" alt="" /></figure>
+
+    
+      </div>
+    </div>
+  </body>
+</html>
