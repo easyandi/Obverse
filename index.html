@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obverse Designs</title>
+  <meta name="description" content="Obverse — handcrafted acrylic and wooden box designs with laser-engraved and guilloche-inspired surfaces.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 5vh 0;
+    }
+
+    .col {
+      width: 31vw;
+      max-width: 720px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;  /* centre children horizontally */
+    }
+
+    /* ── Title: fills full column width ── */
+    .title {
+      width: 100%;
+    }
+
+    .title img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ── Rules ── */
+    .rule {
+      width: 100%;
+      height: 1px;
+      background: #ccc;
+      align-self: stretch;
+    }
+
+    .rule-short {
+      width: 50%;
+      height: 1px;
+      background: #ccc;
+    }
+
+    /* ── Gaps ── */
+    .gap    { height: 8px;  align-self: stretch; }
+    .gap-lg { height: 16px; align-self: stretch; }
+
+    /* ── Main category images: 50% of column width, centred ── */
+    .img-link {
+      display: block;
+      width: 50%;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .img-link img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 0.4s ease;
+    }
+
+    .img-link:hover img {
+      transform: scale(1.02);
+    }
+
+    /* ── Nav row: Process / Dice / Context ──
+       Three equal columns, no vertical dividers.
+    ── */
+    .nav-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+
+    .nav-row a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3% 5%;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.2s ease;
+    }
+
+    .nav-row a:hover { background: #f7f5f2; }
+
+    /* Nav word images: natural width, don't fill column */
+    .nav-row img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+    }
+
+    /* ── Email footer ── */
+    .footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 8px;
+    }
+
+    .footer img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      opacity: 0.65;
+      margin-bottom: 8px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      body { justify-content: flex-start; padding: 4vh 0; }
+      .col { width: 60vw; max-width: 720px; }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 3vh 0; }
+      .col { width: 88vw; }
+    }
+  </style>
+</head>
+<body>
+  <div class="col">
+
+    <!-- Title -->
+    <div class="title">
+      <img
+        src="images/home/title_1440.webp"
+        srcset="images/home/title_720.webp 720w, images/home/title_1440.webp 1440w"
+        sizes="(max-width: 600px) 88vw, (max-width: 900px) 60vw, 31vw"
+        alt="Obverse">
+    </div>
+
+    <div class="gap"></div>
+    <div class="rule"></div>
+    <div class="gap"></div>
+
+    <!-- Acrylics image -->
+    <a class="img-link" href="acrylics.html">
+      <img
+        src="images/home/acryl_hm_750.webp"
+        srcset="images/home/acryl_hm_375.webp 375w, images/home/acryl_hm_750.webp 750w"
+        sizes="(max-width: 600px) 88vw, (max-width: 900px) 60vw, 31vw"
+        alt="Acrylics">
+    </a>
+
+    <div class="gap"></div>
+    <div class="rule-short"></div>
+    <div class="gap"></div>
+
+    <!-- Boxes image -->
+    <a class="img-link" href="boxes.html">
+      <img
+        src="images/home/bx_hm_750.webp"
+        srcset="images/home/bx_hm_375.webp 375w, images/home/bx_hm_750.webp 750w"
+        sizes="(max-width: 600px) 88vw, (max-width: 900px) 60vw, 31vw"
+        alt="Boxes">
+    </a>
+
+    <div class="gap"></div>
+    <div class="rule"></div>
+
+    <!-- Nav row: Process / Dice / Context — no vertical dividers -->
+    <nav class="nav-row">
+      <a href="process.html">
+        <img
+          src="images/home/process_480.webp"
+          srcset="images/home/process_240.webp 240w, images/home/process_480.webp 480w"
+          sizes="(max-width: 600px) 28vw, 9vw"
+          alt="Process">
+      </a>
+      <a href="random.html">
+        <img
+          src="images/home/dice_380.webp"
+          srcset="images/home/dice_160.webp 160w, images/home/dice_380.webp 380w"
+          sizes="(max-width: 600px) 20vw, 7vw"
+          alt="Random sequence">
+      </a>
+      <a href="context.html">
+        <img
+          src="images/home/context_480.webp"
+          srcset="images/home/context_240.webp 240w, images/home/context_480.webp 480w"
+          sizes="(max-width: 600px) 28vw, 9vw"
+          alt="Context">
+      </a>
+    </nav>
+
+    <div class="rule"></div>
+
+    <!-- Email -->
+    <div class="footer">
+      <img
+        src="images/home/email_500.webp"
+        srcset="images/home/email_250.webp 250w, images/home/email_500.webp 500w"
+        sizes="(max-width: 600px) 50vw, 11vw"
+        alt="obversedesigns@gmail.com">
+    </div>
+
+  </div>
+</body>
+</html>
