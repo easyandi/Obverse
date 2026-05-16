@@ -38,10 +38,10 @@
     }
     
     .section-rule {
-  grid-column: span 3;
+  grid-column: 1 / -1;
   height: 1px;
   background: #ccc;
-  margin: 8px 0;    /* adjust top/bottom spacing around the rule */
+  margin: 8px 0;
 }
 
     /*
@@ -87,20 +87,19 @@
     }
 
     /* ── Responsive ── */
-    @media (max-width: 900px) {
-      body { padding: 32px 0 72px; }
-      .col { width: 82%; align-items: center; }
-      .title { width: 100%; }
-      .content-grid { grid-template-columns: repeat(2, 1fr); }
-      .span-3 { grid-column: span 2; }
-    }
+@media (max-width: 900px) {
+  body { padding: 32px 0 72px; }
+  .col { width: 82%; align-items: center; }
+  .title { width: 100%; }
+}
 
-    @media (max-width: 480px) {
-      body { padding: 20px 0 48px; }
-      .col { width: 92%; }
-      .content-grid { grid-template-columns: 1fr; gap: 16px; }
-      .span-1, .span-2, .span-3 { grid-column: span 1; }
-    }
+@media (max-width: 600px) {
+  body { padding: 20px 0 48px; }
+  .col { width: 92%; }
+  .content-grid { grid-template-columns: 1fr; gap: 16px; }
+  .span-1, .span-2, .span-3 { grid-column: span 1; }
+  .section-rule { grid-column: span 1; }
+}
   </style>
 </head>
 <body>
